@@ -35,8 +35,11 @@ public class MapEngine {
     }
   }
 
-  public boolean isCountry(String country) {
-    return countries.containsKey(country);
+  public boolean isCountry(String country) throws CountryNotFoundException {
+    if (countries.containsKey(country)) {
+      return true;
+    }
+    throw new CountryNotFoundException(country);
   }
 
   /** this method is invoked when the user run the command info-country. */
@@ -44,12 +47,14 @@ public class MapEngine {
     while (true) {
       String countryName = Utils.scanner.nextLine();
       countryName = Utils.capitalizeFirstLetterOfEachWord(countryName);
-      if (isCountry(countryName)) {
-        Country country = countries.get(countryName);
-        MessageCli.COUNTRY_INFO.printMessage(country.getName(), country.getContinent(),
-            String.valueOf(country.getTax()));
-        break;
-      } else {
+      try {
+        if (isCountry(countryName)) {
+          Country country = countries.get(countryName);
+          MessageCli.COUNTRY_INFO.printMessage(country.getName(), country.getContinent(),
+              String.valueOf(country.getTax()));
+          break;
+        }
+      } catch (CountryNotFoundException e) {
         MessageCli.INVALID_COUNTRY.printMessage(countryName);
       }
     }
