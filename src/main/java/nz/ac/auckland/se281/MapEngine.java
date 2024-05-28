@@ -41,13 +41,17 @@ public class MapEngine {
 
   /** this method is invoked when the user run the command info-country. */
   public void showInfoCountry() {
-    String country = Utils.scanner.nextLine();
-
-    if (isCountry(country)) {
-      Country c = countries.get(country);
-      MessageCli.COUNTRY_INFO.printMessage(c.getName(), c.getContinent(), String.valueOf(c.getTax()));
-    } else {
-      MessageCli.INVALID_COUNTRY.printMessage(country);
+    while (true) {
+      String countryName = Utils.scanner.nextLine();
+      countryName = Utils.capitalizeFirstLetterOfEachWord(countryName);
+      if (isCountry(countryName)) {
+        Country country = countries.get(countryName);
+        MessageCli.COUNTRY_INFO.printMessage(country.getName(), country.getContinent(),
+            String.valueOf(country.getTax()));
+        break;
+      } else {
+        MessageCli.INVALID_COUNTRY.printMessage(countryName);
+      }
     }
   }
 
