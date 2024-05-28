@@ -62,5 +62,32 @@ public class MapEngine {
 
   /** this method is invoked when the user run the command route. */
   public void showRoute() {
+    while (true) {
+      String startCountryName = Utils.scanner.nextLine();
+      startCountryName = Utils.capitalizeFirstLetterOfEachWord(startCountryName);
+      try {
+        if (isCountry(startCountryName)) {
+          Country startCountry = countries.get(startCountryName);
+          break;
+        }
+      } catch (CountryNotFoundException e) {
+        MessageCli.INVALID_COUNTRY.printMessage(startCountryName);
+      }
+    }
+
+    while (true) {
+      String endCountryName = Utils.scanner.nextLine();
+      endCountryName = Utils.capitalizeFirstLetterOfEachWord(endCountryName);
+      try {
+        if (isCountry(endCountryName)) {
+          Country endCountry = countries.get(endCountryName);
+          break;
+        }
+      } catch (CountryNotFoundException e) {
+        MessageCli.INVALID_COUNTRY.printMessage(endCountryName);
+      }
+    }
+
+    MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
   }
 }
