@@ -24,6 +24,14 @@ public class MapEngine {
     for (String line : countries) {
       String[] parts = line.split(",");
       this.countries.put(parts[0], new Country(parts[0], parts[1], Integer.parseInt(parts[2])));
+      graph.putIfAbsent(parts[0], new ArrayList<>());
+    }
+
+    for (String line : adjacencies) {
+      String[] parts = line.split(",");
+      for (int i = 1; i < parts.length; i++) {
+        graph.get(parts[0]).add(parts[i]);
+      }
     }
   }
 
