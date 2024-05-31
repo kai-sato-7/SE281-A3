@@ -119,6 +119,14 @@ public class MapEngine {
     } else {
       List<String> route = breathFirstTraversal(startCountry.getName(), endCountry.getName());
       MessageCli.ROUTE_INFO.printMessage(route.toString());
+      List<String> continents = new ArrayList<>();
+      for (String country : route) {
+        String continent = countries.get(country).getContinent();
+        if (!continents.contains(continent)) {
+          continents.add(continent);
+        }
+      }
+      MessageCli.CONTINENT_INFO.printMessage(continents.toString());
     }
   }
 }
