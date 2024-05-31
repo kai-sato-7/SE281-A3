@@ -34,4 +34,10 @@ public class Country {
   public void setTax(int tax) {
     this.tax = tax;
   }
+
+  @Override
+  public boolean equals(Object obj) {
+    Country other = (Country) obj;
+    return this.name.equals(other.name) && this.continent.equals(other.continent);
+  }
 }

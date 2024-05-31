@@ -1,8 +1,10 @@
 package nz.ac.auckland.se281;
 
 import java.util.Map;
+import java.util.Queue;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 /** This class is the main entry point. */
@@ -60,14 +62,37 @@ public class MapEngine {
     }
   }
 
+  public List<String> breathFirstTraversal(String root, String target) {
+    Queue<String> queue = new LinkedList<>();
+    Map<String, List<String>> routes = new HashMap<>();
+    queue.add(root);
+    routes.put(root, new ArrayList<>());
+    routes.get(root).add(root);
+    while (!queue.isEmpty()) {
+      String node = queue.poll();
+      for (String country : graph.get(node)) {
+        if (!routes.containsKey(country)) {
+          queue.add(country);
+          routes.put(country, new ArrayList<>(routes.get(node)));
+          routes.get(country).add(country);
+        }
+        if (country.equals(target)) {
+          return routes.get(target);
+        }
+      }
+    }
+    return null;
+  }
+
   /** this method is invoked when the user run the command route. */
   public void showRoute() {
+    Country startCountry;
     while (true) {
       String startCountryName = Utils.scanner.nextLine();
       startCountryName = Utils.capitalizeFirstLetterOfEachWord(startCountryName);
       try {
         if (isCountry(startCountryName)) {
-          Country startCountry = countries.get(startCountryName);
+          startCountry = countries.get(startCountryName);
           break;
         }
       } catch (CountryNotFoundException e) {
@@ -75,12 +100,13 @@ public class MapEngine {
       }
     }
 
+    Country endCountry;
     while (true) {
       String endCountryName = Utils.scanner.nextLine();
       endCountryName = Utils.capitalizeFirstLetterOfEachWord(endCountryName);
       try {
         if (isCountry(endCountryName)) {
-          Country endCountry = countries.get(endCountryName);
+          endCountry = countries.get(endCountryName);
           break;
         }
       } catch (CountryNotFoundException e) {
@@ -88,6 +114,11 @@ public class MapEngine {
       }
     }
 
-    MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
+    if (startCountry.equals(endCountry)) {
+      MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
+    } else {
+      List<String> route = breathFirstTraversal(startCountry.getName(), endCountry.getName());
+      MessageCli.ROUTE_INFO.printMessage(route.toString());
+    }
   }
 }
