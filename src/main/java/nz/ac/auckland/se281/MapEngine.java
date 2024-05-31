@@ -120,13 +120,16 @@ public class MapEngine {
       List<String> route = breathFirstTraversal(startCountry.getName(), endCountry.getName());
       MessageCli.ROUTE_INFO.printMessage(route.toString());
       List<String> continents = new ArrayList<>();
+      int taxTotal = -startCountry.getTax();
       for (String country : route) {
         String continent = countries.get(country).getContinent();
         if (!continents.contains(continent)) {
           continents.add(continent);
         }
+        taxTotal += countries.get(country).getTax();
       }
       MessageCli.CONTINENT_INFO.printMessage(continents.toString());
+      MessageCli.TAX_INFO.printMessage(String.valueOf(Integer.toString(taxTotal)));
     }
   }
 }
