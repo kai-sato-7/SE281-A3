@@ -10,7 +10,7 @@ public class Country {
 
   /**
    * Constructs a new country with the given name, continent, and tax.
-   * 
+
    * @param name      The name of the country.
    * @param continent The continent where the country is located.
    * @param tax       The tax rate for the country.
@@ -23,7 +23,7 @@ public class Country {
 
   /**
    * Gets the name of the country.
-   * 
+
    * @return The name of the country.
    */
   public String getName() {
@@ -32,7 +32,7 @@ public class Country {
 
   /**
    * Gets the continent where the country is located.
-   * 
+
    * @return The continent where the country is located.
    */
   public String getContinent() {
@@ -41,7 +41,7 @@ public class Country {
 
   /**
    * Gets the tax rate for the country.
-   * 
+
    * @return The tax rate for the country.
    */
   public int getTax() {
@@ -50,7 +50,7 @@ public class Country {
 
   /**
    * Sets the name of the country.
-   * 
+
    * @param name The name of the country.
    */
   public void setName(String name) {
@@ -59,7 +59,7 @@ public class Country {
 
   /**
    * Sets the continent where the country is located.
-   * 
+
    * @param continent The continent where the country is located.
    */
   public void setContinent(String continent) {
@@ -68,7 +68,7 @@ public class Country {
 
   /**
    * Sets the tax rate for the country.
-   * 
+
    * @param tax The tax rate for the country.
    */
   public void setTax(int tax) {
@@ -77,8 +77,8 @@ public class Country {
 
   /**
    * Checks if this country is equal to another country.
-   * 
-   * @param obj The country to compare.
+
+   * @param country The country to compare.
    * @return True if the countries are equal, false otherwise.
    */
   @Override

@@ -1,11 +1,6 @@
 package nz.ac.auckland.se281;
 
-import java.util.Map;
-import java.util.Queue;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /** This class is the main entry point. */
 public class MapEngine {
@@ -29,6 +24,7 @@ public class MapEngine {
       graph.putIfAbsent(parts[0], new ArrayList<>());
     }
 
+    // Add the adjacencies to the graph.
     for (String line : adjacencies) {
       String[] parts = line.split(",");
       for (int i = 1; i < parts.length; i++) {
@@ -39,7 +35,7 @@ public class MapEngine {
 
   /**
    * Checks if a country exists in the map.
-   * 
+
    * @param country The name of the country to check.
    */
   public boolean isCountry(String country) throws CountryNotFoundException {
@@ -56,6 +52,7 @@ public class MapEngine {
       countryName = Utils.capitalizeFirstLetterOfEachWord(countryName);
       try {
         if (isCountry(countryName)) {
+          // Prints the country information.
           Country country = countries.get(countryName);
           MessageCli.COUNTRY_INFO.printMessage(country.getName(), country.getContinent(),
               String.valueOf(country.getTax()));
@@ -69,12 +66,12 @@ public class MapEngine {
 
   /**
    * Finds the shortest path between two countries.
-   * 
+
    * @param root   The name of the starting country.
    * @param target The name of the ending country.
    * @return The shortest path between the two countries.
    */
-  public List<String> breathFirstTraversal(String root, String target) {
+  public List<String> breathFirstTraverse(String root, String target) {
     Queue<String> queue = new LinkedList<>();
     Map<String, List<String>> routes = new HashMap<>();
     queue.add(root);
@@ -82,6 +79,7 @@ public class MapEngine {
     routes.get(root).add(root);
     while (!queue.isEmpty()) {
       String node = queue.poll();
+      // Iterates over the adjacent countries.
       for (String country : graph.get(node)) {
         if (!routes.containsKey(country)) {
           queue.add(country);
@@ -132,9 +130,9 @@ public class MapEngine {
     if (startCountry.equals(endCountry)) {
       MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
     } else {
-      List<String> route = breathFirstTraversal(startCountry.getName(), endCountry.getName());
+      List<String> route = breathFirstTraverse(startCountry.getName(), endCountry.getName());
       MessageCli.ROUTE_INFO.printMessage(route.toString());
-      List<String> continents = new ArrayList<>();
+      Set<String> continents = new LinkedHashSet<>();
       int taxTotal = -startCountry.getTax();
       for (String country : route) {
         String continent = countries.get(country).getContinent();
