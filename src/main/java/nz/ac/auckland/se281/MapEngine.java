@@ -37,6 +37,11 @@ public class MapEngine {
     }
   }
 
+  /**
+   * Checks if a country exists in the map.
+   * 
+   * @param country The name of the country to check.
+   */
   public boolean isCountry(String country) throws CountryNotFoundException {
     if (countries.containsKey(country)) {
       return true;
@@ -62,6 +67,13 @@ public class MapEngine {
     }
   }
 
+  /**
+   * Finds the shortest path between two countries.
+   * 
+   * @param root   The name of the starting country.
+   * @param target The name of the ending country.
+   * @return The shortest path between the two countries.
+   */
   public List<String> breathFirstTraversal(String root, String target) {
     Queue<String> queue = new LinkedList<>();
     Map<String, List<String>> routes = new HashMap<>();
@@ -86,6 +98,7 @@ public class MapEngine {
 
   /** this method is invoked when the user run the command route. */
   public void showRoute() {
+    // Gets the starting country input from the user.
     Country startCountry;
     while (true) {
       String startCountryName = Utils.scanner.nextLine();
@@ -100,6 +113,7 @@ public class MapEngine {
       }
     }
 
+    // Gets the ending country input from the user.
     Country endCountry;
     while (true) {
       String endCountryName = Utils.scanner.nextLine();
@@ -114,6 +128,7 @@ public class MapEngine {
       }
     }
 
+    // Prints the route information.
     if (startCountry.equals(endCountry)) {
       MessageCli.NO_CROSSBORDER_TRAVEL.printMessage();
     } else {
